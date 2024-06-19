@@ -25,22 +25,20 @@ public class ReceiveEvent extends  Thread
             while (this.loopFlag) {
                     int command = sc.nextInt();
                     switch (command) {
-                        case -1:
+                        case-1:
                             robot.mousePress(sc.nextInt());
                             break;
-                        case -2:
+                        case-2:
                             robot.mouseRelease(sc.nextInt());
                             break;
-                        case -3:
+                        case-3:
                             robot.keyPress(sc.nextInt());
                             break;
-                        case -4:
+                        case-4:
                             robot.keyRelease(sc.nextInt());
                             break;
-                        case -5:
+                        case-5:
                             robot.mouseMove(sc.nextInt(), sc.nextInt());
-                            break;
-                        default:
                             break;
                     }
                 

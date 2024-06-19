@@ -32,7 +32,7 @@ double h;
         cPanel.addMouseMotionListener(this);
         try
         {
-            writer = new PrintWriter(cSocket.getOutputStream());
+            this.writer = new PrintWriter(cSocket.getOutputStream());
         }
         catch (IOException e)
         {
