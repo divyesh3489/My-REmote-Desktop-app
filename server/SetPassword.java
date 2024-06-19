@@ -18,7 +18,7 @@ public class SetPassword extends  JFrame implements  ActionListener {
     public SetPassword()
     {
         labelSetPasword = new JLabel();
-        labelSetPasword.setText("Set Password");
+        labelSetPasword.setText("Enter Your password Password");
         textFieldSetPasword = new JTextField(15);
         labelSpace = new JLabel();
         this.setLayout(new BorderLayout());
@@ -35,9 +35,10 @@ public class SetPassword extends  JFrame implements  ActionListener {
 
     public void actionPerformed(ActionEvent e)
     {
-        this.ValueOfPassword = textFieldSetPasword.getText();
+        ValueOfPassword = textFieldSetPasword.getText();
+        System.out.println(ValueOfPassword);
         dispose();
-        new InitConnection(Integer.parseInt(port),this.ValueOfPassword);
+        new InitConnection(Integer.parseInt(port),ValueOfPassword);
     }
     public String getValueOfPassword()
     {
