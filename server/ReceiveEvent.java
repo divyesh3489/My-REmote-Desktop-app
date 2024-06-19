@@ -20,8 +20,7 @@ public class ReceiveEvent extends  Thread
     {
         Scanner sc = null;
         try {
-            System.out.println(socket.getInputStream());
-
+            System.out.println(socket.getInputStream().read());
             sc = new Scanner(socket.getInputStream());
             while (this.loopFlag) {
                     int command = sc.nextInt();
