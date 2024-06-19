@@ -22,25 +22,24 @@ public class ReceiveEvent extends  Thread
         try {
             sc = new Scanner(cs.getInputStream());
             while (this.loopFlag) {
-                System.out.println(sc.hasNext());
-                if (sc.hasNext())
+                if (sc.hasNextInt())
                 {
-                    int command = Integer.parseInt(sc.next());
+                    int command = sc.nextInt();
                     switch (command) {
                         case -1:
-                            robot.mousePress(Integer.parseInt(sc.next()));
+                            robot.mousePress(sc.nextInt());
                             break;
                         case -2:
-                            robot.mouseRelease(Integer.parseInt(sc.next()));
+                            robot.mouseRelease(sc.nextInt());
                             break;
                         case -3:
-                            robot.keyPress(Integer.parseInt(sc.next()));
+                            robot.keyPress(sc.nextInt());
                             break;
                         case -4:
-                            robot.keyRelease(Integer.parseInt(sc.next()));
+                            robot.keyRelease(sc.nextInt());
                             break;
                         case -5:
-                            robot.mouseMove(Integer.parseInt(sc.next()), Integer.parseInt(sc.next()));
+                            robot.mouseMove(sc.nextInt(), sc.nextInt());
                             break;
                         default:
                             throw new AssertionError();
