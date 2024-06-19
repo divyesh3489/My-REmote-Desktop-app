@@ -23,7 +23,6 @@ public class ReceiveEvent extends  Thread
             sc = new Scanner(cs.getInputStream());
             while (this.loopFlag) {
                     int command = sc.nextInt();
-                    System.out.println(command + "-----");
                     switch (command) {
                         case -1:
                             robot.mousePress(sc.nextInt());
@@ -46,7 +45,7 @@ public class ReceiveEvent extends  Thread
                 
             }
         } catch (IOException e) {
-            System.err.println(e.toString());
+            System.out.println("hi");
             // e.printStackTrace();
 
         }
