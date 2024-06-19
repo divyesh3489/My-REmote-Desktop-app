@@ -50,7 +50,8 @@ public class ReceiveEvent extends  Thread
                 
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println(e);
+            // e.printStackTrace();
 
         }
     }
