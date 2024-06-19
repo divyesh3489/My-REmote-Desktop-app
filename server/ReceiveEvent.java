@@ -6,12 +6,12 @@ import java.util.Scanner;
 
 public class ReceiveEvent extends  Thread
 {
-    Socket cs = null;
+    Socket socket = null;
     Robot robot = null;
     boolean loopFlag = true;
 
     public ReceiveEvent(Socket cs,Robot robot) {
-        this.cs = cs;
+        this.socket = cs;
         this.robot = robot;
         this.start();
         
@@ -21,7 +21,7 @@ public class ReceiveEvent extends  Thread
         Scanner sc = null;
         try {
             System.out.println("hi");
-            sc = new Scanner(cs.getInputStream());
+            sc = new Scanner(socket.getInputStream());
             while (this.loopFlag) {
                     int command = sc.nextInt();
                     switch (command) {
