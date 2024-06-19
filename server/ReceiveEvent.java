@@ -20,6 +20,7 @@ public class ReceiveEvent extends  Thread
     {
         Scanner sc = null;
         try {
+            System.out.println("hi");
             sc = new Scanner(cs.getInputStream());
             while (this.loopFlag) {
                     int command = sc.nextInt();
@@ -45,8 +46,8 @@ public class ReceiveEvent extends  Thread
                 
             }
         } catch (IOException e) {
-            System.out.println("hi");
-            // e.printStackTrace();
+            
+            e.printStackTrace();
 
         }
     }
