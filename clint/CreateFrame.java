@@ -3,7 +3,6 @@ import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
-import java.nio.file.Watchable;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -27,11 +26,11 @@ public class CreateFrame extends Thread {
     public void drowGUI()
     {
         frame.add(desktop,BorderLayout.CENTER);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(frame.getExtendedState() | JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
         internalFrame.setLayout(new BorderLayout());
-        internalFrame.setContentPane().add(cPanel,BorderLayout.CENTER);
+        internalFrame.getContentPane().add(cPanel,BorderLayout.CENTER);
         internalFrame.setSize(100,100);
         desktop.add(internalFrame);
         try

@@ -1,8 +1,5 @@
 import java.net.Socket;
 import javax.swing.JOptionPane;
-
-
-
 public class Start {
     static String port = "5000";
     public static void main(String[] args) {
