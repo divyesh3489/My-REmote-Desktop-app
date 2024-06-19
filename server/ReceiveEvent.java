@@ -41,7 +41,7 @@ public class ReceiveEvent extends  Thread
                             robot.mouseMove(sc.nextInt(), sc.nextInt());
                             break;
                         default:
-                            throw new AssertionError();
+                            break;
                     }
                 
             }
