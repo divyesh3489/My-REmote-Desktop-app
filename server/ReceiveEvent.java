@@ -23,7 +23,7 @@ public class ReceiveEvent extends  Thread
             sc = new Scanner(cs.getInputStream());
             while (this.loopFlag) {
                     int command = sc.nextInt();
-                    System.out.println(command);
+                    System.out.println(command + "-----");
                     switch (command) {
                         case -1:
                             robot.mousePress(sc.nextInt());
