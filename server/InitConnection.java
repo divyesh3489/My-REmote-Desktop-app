@@ -38,6 +38,7 @@ public class InitConnection
                 password = new DataInputStream(cs.getInputStream());
                 verify = new DataOutputStream(cs.getOutputStream());
                 String clintPassword = password.readUTF();
+                System.out.println(clintPassword+ "-------------"  + setPassword );
                 if(clintPassword.equals(setPassword)) 
                 {
                     verify.writeBoolean(true);;
