@@ -18,7 +18,7 @@ public class InitConnection
     DataOutputStream verify = null;
     String width = "";
     String height = "";
-    InitConnection(int port,String setPassword)
+    public InitConnection(int port,String setPassword)
     {
         Robot robot = null;
         Rectangle rect = null;

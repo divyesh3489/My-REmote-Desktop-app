@@ -15,7 +15,7 @@ public class SetPassword extends  JFrame implements  ActionListener {
     JPanel panel;
     JTextField textFieldSetPasword, textField2;
     JLabel labelSetPasword,labelSpace,label2;
-    SetPassword()
+    public SetPassword()
     {
         labelSetPasword = new JLabel();
         labelSetPasword.setText("Set Password");

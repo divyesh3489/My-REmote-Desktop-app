@@ -13,7 +13,7 @@ public  class SendScreen extends  Thread
     Rectangle rect = null;
     boolean loopFlag = true;
     OutputStream outstream = null;
-    SendScreen(Socket cs, Robot robot , Rectangle rect)
+    public SendScreen(Socket cs, Robot robot , Rectangle rect)
     {
         this.cs = cs;
         this.robot = robot;
