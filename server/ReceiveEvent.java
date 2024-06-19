@@ -25,6 +25,7 @@ public class ReceiveEvent extends  Thread
                 if (sc.hasNextInt())
                 {
                     int command = sc.nextInt();
+                    System.out.println(command);
                     switch (command) {
                         case -1:
                             robot.mousePress(sc.nextInt());
