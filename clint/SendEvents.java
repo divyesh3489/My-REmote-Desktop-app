@@ -48,9 +48,9 @@ double h;
     {
         double x = (double)this.w/cPanel.getWidth();
         double y = (double) this.h/cPanel.getHeight();
-        writer.(Command.MOVE_MOUSE.getAbbev());
-        writer.println((double)e.getX()*x);
-        writer.println((double)e.getY()*y);
+        writer.println(Command.MOVE_MOUSE.getAbbev());
+        writer.println((int)e.getX()*x);
+        writer.println((int)e.getY()*y);
         writer.flush();
     }
     public void mouseClicked (MouseEvent e)
@@ -70,8 +70,17 @@ double h;
         writer.flush();
     }
     public void mouseReleased(MouseEvent e)
+    
     {
-
+    writer.println(Command.RELEASE_MOUSE.getAbbev());
+            int button = e.getButton();
+            int xButton = 16;
+            if (button == 3)
+            {
+                xButton = 4;
+            }
+            writer.println(xButton);
+            writer.flush();
     }
     public void mouseEntered(MouseEvent e)
     {

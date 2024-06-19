@@ -22,8 +22,6 @@ public class ReceiveEvent extends  Thread
         try {
             sc = new Scanner(cs.getInputStream());
             while (this.loopFlag) {
-                if (sc.hasNextInt())
-                {
                     int command = sc.nextInt();
                     switch (command) {
                         case -1:
@@ -44,8 +42,6 @@ public class ReceiveEvent extends  Thread
                         default:
                             throw new AssertionError();
                     }
-                }
-                
                 
             }
         } catch (IOException e) {
