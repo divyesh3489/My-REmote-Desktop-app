@@ -49,8 +49,8 @@ double h;
         double x = (double)this.w/cPanel.getWidth();
         double y = (double) this.h/cPanel.getHeight();
         writer.println(Command.MOVE_MOUSE.getAbbev());
-        writer.println((int) e.getX()*x);
-        writer.println((int) e.getY()*y);
+        writer.println((int) (e.getX()*x));
+        writer.println((int) (e.getY()*y));
         writer.flush();
     }
     public void mouseClicked (MouseEvent e)
