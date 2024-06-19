@@ -11,17 +11,19 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 
-public class InitConnection
-{
+public class InitConnection {
+    
     ServerSocket socket = null;
     DataInputStream password = null;
     DataOutputStream verify = null;
     String width = "";
     String height = "";
-    public InitConnection(int port,String setPassword)
-    {
+
+    public InitConnection(int port,String setPassword){
+        
         Robot robot = null;
         Rectangle rect = null;
+        
         try{
             System.out.println("Wating For Connation from Clint");
             socket = new ServerSocket(port);
@@ -38,31 +40,25 @@ public class InitConnection
                 password = new DataInputStream(cs.getInputStream());
                 verify = new DataOutputStream(cs.getOutputStream());
                 String clintPassword = password.readUTF();
-                if(clintPassword.equals(setPassword)) 
-                {
+                if(clintPassword.equals(setPassword)) {
                     verify.writeBoolean(true);
                     verify.writeUTF(width);
                     verify.writeUTF(height);
                     new SendScreen(cs,robot,rect);
                     new ReceiveEvent(cs,robot);
-                
                 }
-                else
-                {
+                else{
                     verify.writeBoolean(false);
                     System.out.println("Invalid Password");
                 }
             }
-
-
         }
-        catch(Exception e)
-        {
+        catch(Exception e){
             e.printStackTrace();
         }
     }
-    private  void drawGUI()
-    {
+
+    private  void drawGUI(){
 
     }
 }

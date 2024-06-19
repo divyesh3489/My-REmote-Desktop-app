@@ -17,14 +17,18 @@ public class CreateFrame extends Thread {
     private Socket cSocket = null;
     private JInternalFrame internalFrame = new JInternalFrame("Server Screen",true,true,true); 
     private JPanel cPanel = new JPanel();
+
     public CreateFrame(Socket cSocket , String width,String  height) {
+    
         this.cSocket = cSocket;
         this.height = height;
         this.width = width;
         this.start();
+    
     }
-    public void drowGUI()
-    {
+    
+    public void drowGUI(){
+        
         frame.add(desktop,BorderLayout.CENTER);
         frame.setDefaultCloseOperation(frame.getExtendedState() | JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -33,34 +37,30 @@ public class CreateFrame extends Thread {
         internalFrame.getContentPane().add(cPanel,BorderLayout.CENTER);
         internalFrame.setSize(100,100);
         desktop.add(internalFrame);
-        try
-        {
+        try{
             internalFrame.setMaximum(true);
         }
-        catch (PropertyVetoException e)
-        {
+        catch (PropertyVetoException e){
             e.printStackTrace();
         }
         cPanel.setFocusable(true);
         internalFrame.setVisible(true);
+    
     }
     
-    public void run ()
-    {
-         InputStream input = null;
-         drowGUI();
-         try
-         {
+    public void run (){
+         
+        InputStream input = null;
+        drowGUI();
+        try{
             input = cSocket.getInputStream();
-        
-         }
-         catch (IOException e)
-         {
+        }
+        catch (IOException e){
             e.printStackTrace();
-         }
-         new ReceivingScreen(input , cPanel);
-         new SendEvents(cSocket,cPanel,width,height);
+        }
+        new ReceivingScreen(input , cPanel);
+        new SendEvents(cSocket,cPanel,width,height);
+    
     }
 
-    
 }

@@ -3,6 +3,7 @@ import javax.swing.JOptionPane;
 public class Start {
     static String port = "5000";
     public static void main(String[] args) {
+        
         String ip = JOptionPane.showInputDialog("Enter The Server Ip Address");
         Start stratProgram =new Start();
         stratProgram.CreateSocket(ip,Integer.parseInt(port));
@@ -17,7 +18,6 @@ public class Start {
             auth.setSize(300,80);
             auth.setLocation(500,300);
             auth.setVisible(true);
-
         } catch (Exception e) {
             e.printStackTrace();
         }

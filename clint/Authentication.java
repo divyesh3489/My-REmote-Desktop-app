@@ -10,6 +10,7 @@ import java.net.Socket;
 import javax.swing.*;
 
 public class Authentication extends JFrame implements ActionListener {
+
     private Socket cSocket = null;
     DataOutputStream  checkPass = null;
     DataInputStream verification = null;
@@ -20,8 +21,9 @@ public class Authentication extends JFrame implements ActionListener {
     String width = "";
     String height = "";
     JTextField textfieldPassword;
-    public Authentication(Socket cSocket)
-    {
+    
+    public Authentication(Socket cSocket){
+        
         this.cSocket = cSocket;
         labelPassword = new JLabel();
         labelPassword.setText("Enter Password");
@@ -39,11 +41,10 @@ public class Authentication extends JFrame implements ActionListener {
         submit.addActionListener(this);
         setTitle("Authnticate your self");
 
-
-
     }
-    public  void actionPerformed(ActionEvent Passwordaction)
-    {   
+
+    public  void actionPerformed(ActionEvent Passwordaction){   
+
         String getPasswordvalue = textfieldPassword.getText();
         try{
             checkPass = new DataOutputStream(cSocket.getOutputStream());
@@ -52,14 +53,11 @@ public class Authentication extends JFrame implements ActionListener {
             verify = verification.readBoolean();    
             System.out.println(checkPass);
             System.out.println(verify);
-
         }
-        catch(IOException e)
-        {
+        catch(IOException e){
             e.printStackTrace();
         }
-        if (verify)
-        {
+        if (verify){
             try{
                 width = verification.readUTF();
                 height = verification.readUTF();
@@ -71,8 +69,7 @@ public class Authentication extends JFrame implements ActionListener {
             CreateFrame frame = new CreateFrame(cSocket,width,height);
             dispose();
         }
-        else
-        {
+        else{
             System.out.println("Please Enter Valid password");
             JOptionPane.showMessageDialog(this,"Password is invalid, Please Enter Valid password","Error",JOptionPane.ERROR);
             dispose();
