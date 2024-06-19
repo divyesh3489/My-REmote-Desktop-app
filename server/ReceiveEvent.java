@@ -25,22 +25,22 @@ public class ReceiveEvent extends  Thread
                 System.out.println(sc.hasNext());
                 if (sc.hasNext())
                 {
-                    int command = sc.nextInt();
+                    int command = Integer.parseInt(sc.next());
                     switch (command) {
                         case -1:
-                            robot.mousePress(sc.nextInt());
+                            robot.mousePress(Integer.parseInt(sc.next()));
                             break;
                         case -2:
-                            robot.mouseRelease(sc.nextInt());
+                            robot.mouseRelease(Integer.parseInt(sc.next()));
                             break;
                         case -3:
-                            robot.keyPress(sc.nextInt());
+                            robot.keyPress(Integer.parseInt(sc.next()));
                             break;
                         case -4:
-                            robot.keyRelease(sc.nextInt());
+                            robot.keyRelease(Integer.parseInt(sc.next()));
                             break;
                         case -5:
-                            robot.mouseMove(sc.nextInt(), sc.nextInt());
+                            robot.mouseMove(Integer.parseInt(sc.next()), Integer.parseInt(sc.next()));
                             break;
                         default:
                             throw new AssertionError();

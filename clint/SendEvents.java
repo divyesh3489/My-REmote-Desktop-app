@@ -48,7 +48,7 @@ double h;
     {
         double x = (double)this.w/cPanel.getWidth();
         double y = (double) this.h/cPanel.getHeight();
-        writer.println(Command.MOVE_MOUSE.getAbbev());
+        writer.(Command.MOVE_MOUSE.getAbbev());
         writer.println((double)e.getX()*x);
         writer.println((double)e.getY()*y);
         writer.flush();
