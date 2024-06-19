@@ -5,7 +5,7 @@ public enum  Command {
     RELEASE_KEY (-4),
     MOVE_MOUSE(-5);
     private  int abbrev;
-    public Command(int abbrev)
+    Command(int abbrev)
     {
         this.abbrev = abbrev;
     }
