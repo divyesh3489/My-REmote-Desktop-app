@@ -41,7 +41,7 @@ public class InitConnection
                 System.out.println(clintPassword+ "-------------"  + setPassword );
                 if(clintPassword.equals(setPassword)) 
                 {
-                    verify.writeBoolean(true);;
+                    verify.writeBoolean(true);
                     verify.writeUTF(width);
                     verify.writeUTF(height);
                     new SendScreen(cs,robot,rect);
