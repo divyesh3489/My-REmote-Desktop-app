@@ -49,8 +49,9 @@ public class Authentication extends JFrame implements ActionListener {
             checkPass = new DataOutputStream(cSocket.getOutputStream());
             verification = new DataInputStream(cSocket.getInputStream());
             checkPass.writeUTF(getPasswordvalue);
-            verify = verification.readUTF();
-
+            verify = verification.readUTF();    
+            System.out.println(checkPass);
+            System.out.println(verify);
 
         }
         catch(IOException e)
