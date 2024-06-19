@@ -13,7 +13,7 @@ public class Authentication extends JFrame implements ActionListener {
     private Socket cSocket = null;
     DataOutputStream  checkPass = null;
     DataInputStream verification = null;
-    String  verify = "";
+    boolean  verify;
     JButton submit;
     JPanel panel;
     JLabel labelPassword,labelSpace;
@@ -49,7 +49,7 @@ public class Authentication extends JFrame implements ActionListener {
             checkPass = new DataOutputStream(cSocket.getOutputStream());
             verification = new DataInputStream(cSocket.getInputStream());
             checkPass.writeUTF(getPasswordvalue);
-            verify = verification.readUTF();    
+            verify = verification.readBoolean();    
             System.out.println(checkPass);
             System.out.println(verify);
 
@@ -58,7 +58,7 @@ public class Authentication extends JFrame implements ActionListener {
         {
             e.printStackTrace();
         }
-        if (verify.equals("valid"))
+        if (verify)
         {
             try{
                 width = verification.readUTF();

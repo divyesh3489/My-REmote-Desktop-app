@@ -40,7 +40,7 @@ public class InitConnection
                 String clintPassword = password.readUTF();
                 if(clintPassword.equals(setPassword)) 
                 {
-                    verify.writeUTF("valid");
+                    verify.writeBoolean(true);;
                     verify.writeUTF(width);
                     verify.writeUTF(height);
                     new SendScreen(cs,robot,rect);
@@ -49,7 +49,7 @@ public class InitConnection
                 }
                 else
                 {
-                    verify.writeUTF("Invalid Password");
+                    verify.writeBoolean(false);
                     System.out.println("Invalid Password");
                 }
             }
