@@ -17,7 +17,7 @@ public class CreateFrame extends Thread {
     private Socket cSocket = null;
     private JInternalFrame internalFrame = new JInternalFrame("Server Screen",true,true,true); 
     private JPanel cPanel = new JPanel();
-    CreateFrame(Socket cSocket , String width,String  height) {
+    public CreateFrame(Socket cSocket , String width,String  height) {
         this.cSocket = cSocket;
         this.height = height;
         this.width = width;

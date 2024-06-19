@@ -19,7 +19,7 @@ String width = "";
 String height = "";
 double w;
 double h;
-    SendEvents(Socket cSocket,JPanel  cPanel ,String width, String height)
+    public SendEvents(Socket cSocket,JPanel  cPanel ,String width, String height)
     {
         this.cSocket = cSocket;
         this.cPanel = cPanel;

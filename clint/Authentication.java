@@ -20,7 +20,7 @@ public class Authentication extends JFrame implements ActionListener {
     String width = "";
     String height = "";
     JTextField textfieldPassword;
-    Authentication(Socket cSocket)
+    public Authentication(Socket cSocket)
     {
         this.cSocket = cSocket;
         labelPassword = new JLabel();
