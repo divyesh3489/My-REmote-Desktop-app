@@ -1,65 +1,40 @@
-
-import java.awt.Dimension;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.Toolkit;
+import javax.swing.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.net.ServerSocket;
+import java.io.IOException;
 import java.net.Socket;
 
-
 public class InitConnection {
-    
-    ServerSocket socket = null;
-    DataInputStream password = null;
-    DataOutputStream verify = null;
-    String width = "";
-    String height = "";
+    private Socket clientSocket;
+    private String password;
+    private JLabel statusLabel;
 
-    public InitConnection(int port,String setPassword){
-        
-        Robot robot = null;
-        Rectangle rect = null;
-        
-        try{
-            System.out.println("Wating For Connation from Clint");
-            socket = new ServerSocket(port);
-            GraphicsEnvironment gEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            GraphicsDevice gDivce = gEnv.getDefaultScreenDevice();
-            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-            width = "" + dim.getWidth();
-            height = "" + dim.getHeight();
-            rect = new Rectangle(dim);
-            robot = new Robot(gDivce);
-            drawGUI();
-            while (true) { 
-                Socket cs = socket.accept();
-                password = new DataInputStream(cs.getInputStream());
-                verify = new DataOutputStream(cs.getOutputStream());
-                String clintPassword = password.readUTF();
-                if(clintPassword.equals(setPassword)) {
-                    verify.writeBoolean(true);
-                    verify.writeUTF(width);
-                    verify.writeUTF(height);
-                    new SendScreen(cs,robot,rect);
-                    new ReceiveEvent(cs,robot);
-                }
-                else{
-                    verify.writeBoolean(false);
-                    System.out.println("Invalid Password");
-                }
+    public InitConnection(Socket clientSocket, String password, JLabel statusLabel) {
+        this.clientSocket = clientSocket;
+        this.password = password;
+        this.statusLabel = statusLabel;
+        handleConnection();
+    }
+
+    private void handleConnection() {
+        try {
+            DataInputStream input = new DataInputStream(clientSocket.getInputStream());
+            DataOutputStream output = new DataOutputStream(clientSocket.getOutputStream());
+
+            String receivedPassword = input.readUTF();
+            if (receivedPassword.equals(password)) {
+                output.writeBoolean(true);
+                statusLabel.setText("Authentication successful. Connection established.");
+                new SendScreen(clientSocket, statusLabel);  // Add appropriate constructor for SendScreen
+            } else {
+                output.writeBoolean(false);
+                statusLabel.setText("Authentication failed. Incorrect password.");
+                clientSocket.close();
             }
-        }
-        catch(Exception e){
+        } catch (IOException e) {
+            statusLabel.setText("Connection error.");
             e.printStackTrace();
         }
     }
-
-    private  void drawGUI(){
-
-    }
 }
-
+    

@@ -1,50 +1,40 @@
-import java.awt.Rectangle;
-import java.awt.Robot;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.Socket;
+import java.awt.Robot;
 import javax.imageio.ImageIO;
+public class SendScreen extends Thread {
+    private Socket clientSocket;
+    private JLabel statusLabel;
+    private Robot robot;
+    private Rectangle screenRect;
 
-public  class SendScreen extends  Thread{
-
-    Socket cs = null;
-    Robot robot = null;
-    Rectangle rect = null;
-    boolean loopFlag = true;
-    OutputStream outstream = null;
-    
-    public SendScreen(Socket cs, Robot robot , Rectangle rect){
-
-        this.cs = cs;
-        this.robot = robot;
-        this.rect = rect;
-        this.start();
-    
-    } 
-
-    public void run(){
-
-        try{
-            outstream = cs.getOutputStream();
-        }
-        catch(IOException e){
+    public SendScreen(Socket clientSocket, JLabel statusLabel) {
+        this.clientSocket = clientSocket;
+        this.statusLabel = statusLabel;
+        try {
+            this.robot = new Robot();
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            this.screenRect = new Rectangle(screenSize);
+        } catch (AWTException e) {
             e.printStackTrace();
         }
-        while(this.loopFlag){
-            BufferedImage  bImg= robot.createScreenCapture(rect);
-            try {
-                ImageIO.write(bImg,"jpeg", outstream);
-            } 
-            catch (Exception e) {
-                e.printStackTrace();
+        start();
+    }
+
+    public void run() {
+        try {
+            DataOutputStream output = new DataOutputStream(clientSocket.getOutputStream());
+            while (true) {
+                BufferedImage screenCapture = robot.createScreenCapture(screenRect);
+                ImageIO.write(screenCapture, "jpg", output);
             }
-            try {
-                Thread.sleep(10);
-            }
-            catch (InterruptedException e) {
-               e.printStackTrace();
-            }
+        } catch (IOException e) {
+            statusLabel.setText("Connection lost.");
+            e.printStackTrace();
         }
     }
-} 
+}

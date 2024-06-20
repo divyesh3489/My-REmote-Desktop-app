@@ -1,66 +1,46 @@
-import java.awt.BorderLayout;
-import java.beans.PropertyVetoException;
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
-import javax.swing.JDesktopPane;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JPanel;
 
 public class CreateFrame extends Thread {
+    private JFrame frame;
+    private JPanel panel;
+    private JLabel statusLabel;
+    private Socket clientSocket;
+    private String width;
+    private String height;
 
-    String width = "";
-    String height = "";
-    private JFrame frame = new JFrame();
-    private JDesktopPane desktop = new JDesktopPane();
-    private Socket cSocket = null;
-    private JInternalFrame internalFrame = new JInternalFrame("Server Screen",true,true,true); 
-    private JPanel cPanel = new JPanel();
-
-    public CreateFrame(Socket cSocket , String width,String  height) {
-    
-        this.cSocket = cSocket;
-        this.height = height;
+    public CreateFrame(Socket clientSocket, String width, String height) {
+        this.clientSocket = clientSocket;
         this.width = width;
-        this.start();
-    
-    }
-    
-    public void drowGUI(){
-        
-        frame.add(desktop,BorderLayout.CENTER);
-        frame.setDefaultCloseOperation(frame.getExtendedState() | JFrame.EXIT_ON_CLOSE);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.height = height;
+
+        frame = new JFrame("Remote Desktop Client");
+        panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+
+        statusLabel = new JLabel("Connected to Server", SwingConstants.CENTER);
+        statusLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        panel.add(statusLabel, BorderLayout.CENTER);
+
+        frame.add(panel);
+        frame.setSize(800, 600);
+        frame.setLocationRelativeTo(null); // Center the window
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        internalFrame.setLayout(new BorderLayout());
-        internalFrame.getContentPane().add(cPanel,BorderLayout.CENTER);
-        internalFrame.setSize(100,100);
-        desktop.add(internalFrame);
-        try{
-            internalFrame.setMaximum(true);
-        }
-        catch (PropertyVetoException e){
-            e.printStackTrace();
-        }
-        cPanel.setFocusable(true);
-        internalFrame.setVisible(true);
-    
-    }
-    
-    public void run (){
-         
-        InputStream input = null;
-        drowGUI();
-        try{
-            input = cSocket.getInputStream();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-        new ReceivingScreen(input , cPanel);
-        new SendEvents(cSocket,cPanel,width,height);
-    
+
+        start();
     }
 
+    public void run() {
+        try {
+            InputStream input = clientSocket.getInputStream();
+            new ReceivingScreen(input, panel);
+            new SendEvents(clientSocket, panel, width, height);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
