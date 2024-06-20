@@ -46,19 +46,6 @@ public class ConnectionStatusFrame extends JFrame {
                 statusLabel.setText("Connection failed.");
                 e.printStackTrace();
             }
-            finally {
-            // Ensure resources are closed
-            try {
-                if (clientSocket != null && !clientSocket.isClosed()) {
-                    clientSocket.close();
-                }
-                if (serverSocket != null && !serverSocket.isClosed()) {
-                    serverSocket.close();
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
         }
     }
 }

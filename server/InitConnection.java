@@ -1,15 +1,13 @@
-import javax.swing.*;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.Socket;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
-import java.net.ServerSocket;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
+import javax.swing.*;
 
 
 
@@ -55,6 +53,7 @@ public class InitConnection {
             } else {
                 output.writeBoolean(false);
                 statusLabel.setText("Authentication failed. Incorrect password.");
+                clientSocket.close();
                 new ConnectionStatusFrame(port , password);
             }
         } catch (Exception e) {
