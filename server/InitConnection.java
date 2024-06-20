@@ -13,6 +13,7 @@ import java.net.ServerSocket;
 
 
 
+
 public class InitConnection {
     private Socket clientSocket;
     private String password;
@@ -47,7 +48,8 @@ public class InitConnection {
                 output.writeUTF(width);
                 output.writeUTF(height);
                 statusLabel.setText("Authentication successful. Connection established.");
-                new SendScreen(this.clientSocket, this.statusLabel , robot, rect);  
+                new SendScreen(this.clientSocket, this.statusLabel , robot, rect); 
+                new ReceiveEvent(this.clientSocket, robot); 
             } else {
                 output.writeBoolean(false);
                 statusLabel.setText("Authentication failed. Incorrect password.");

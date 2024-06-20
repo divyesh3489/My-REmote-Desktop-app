@@ -26,6 +26,7 @@ public class ConnectionStatusFrame extends JFrame {
         new ConnectionHandler(port, password).start();
     }
 
+    
     private class ConnectionHandler extends Thread {
         private int port;
         private String password;
