@@ -1,37 +1,31 @@
 import javax.sound.sampled.*;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 
-public class AudioReceiver extends Thread {
+public class AudioSender extends Thread {
     private Socket socket;
     private boolean running = true;
 
-    public AudioReceiver(String serverIp, int port) {
-        try {
-            socket = new Socket(serverIp, port);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public AudioSender(Socket socket) {
+        this.socket = socket;
     }
 
     @Override
     public void run() {
         AudioFormat format = getAudioFormat();
-        DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
+        DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
 
-        try (SourceDataLine speakers = (SourceDataLine) AudioSystem.getLine(info);
-             InputStream inputStream = socket.getInputStream()) {
+        try (TargetDataLine microphone = (TargetDataLine) AudioSystem.getLine(info);
+                OutputStream outputStream = socket.getOutputStream()) {
 
-            speakers.open(format);
-            speakers.start();
+            microphone.open(format);
+            microphone.start();
 
             byte[] buffer = new byte[4096];
             while (running) {
-                int bytesRead = inputStream.read(buffer, 0, buffer.length);
-                if (bytesRead > 0) {
-                    speakers.write(buffer, 0, bytesRead);
-                }
+                int bytesRead = microphone.read(buffer, 0, buffer.length);
+                outputStream.write(buffer, 0, bytesRead);
             }
         } catch (LineUnavailableException | IOException e) {
             e.printStackTrace();
