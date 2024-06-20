@@ -1,38 +1,47 @@
+import javax.sound.sampled.*;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
-import javax.sound.sampled.*;
 
 public class AudioSender extends Thread {
-    private static final int AUDIO_PORT = 5001; // Different port for audio
+    private Socket socket;
+    private boolean running = true;
+
+    public AudioSender(Socket socket) {
+        this.socket = socket;
+    }
 
     @Override
     public void run() {
-        try (ServerSocket serverSocket = new ServerSocket(AUDIO_PORT)) {
-            System.out.println("Audio Server is running...");
-            Socket clientSocket = serverSocket.accept();
-            System.out.println("Audio Client connected!");
+        AudioFormat format = getAudioFormat();
+        DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
 
-            AudioFormat format = new AudioFormat(44100, 16, 2, true, true);
-            DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
-            TargetDataLine line = (TargetDataLine) AudioSystem.getLine(info);
+        try (TargetDataLine line = (TargetDataLine) AudioSystem.getLine(info);
+                OutputStream outputStream = socket.getOutputStream()) {
+
             line.open(format);
             line.start();
 
-            OutputStream out = clientSocket.getOutputStream();
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-
-            while ((bytesRead = line.read(buffer, 0, buffer.length)) != -1) {
-                out.write(buffer, 0, bytesRead);
+            byte[] buffer = new byte[4096];
+            while (running) {
+                int bytesRead = line.read(buffer, 0, buffer.length);
+                if (bytesRead > 0) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
             }
-
-            line.close();
-            out.close();
-            clientSocket.close();
-        } catch (IOException | LineUnavailableException e) {
+        } catch (LineUnavailableException | IOException e) {
             e.printStackTrace();
         }
     }
-}
+
+    private AudioFormat getAudioFormat() {
+        float sampleRate = 44100;
+        int sampleSizeInBits = 16;
+        int channels = 2;
+        boolean signed = true;
+        boolean bigEndian = true;
+        return new AudioFormat(sampleRate, sampleSizeInBits, channels, signed, bigEndian);
+    }
+
+public void stopRunning() {
+        running = false;

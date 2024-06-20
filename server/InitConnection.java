@@ -1,4 +1,3 @@
-
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -10,56 +9,62 @@ import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-
 public class InitConnection {
-    
-    ServerSocket socket = null;
-    DataInputStream password = null;
-    DataOutputStream verify = null;
-    String width = "";
-    String height = "";
+    private ServerSocket screenSocket;
+    private ServerSocket audioSocket;
+    private static final int AUDIO_PORT = 5001;
+    private String setPassword;
+    private String width = "";
+    private String height = "";
 
-    public InitConnection(int port,String setPassword){
-        
-        Robot robot = null;
-        Rectangle rect = null;
-        
-        try{
-            System.out.println("Wating For Connation from Clint");
-            socket = new ServerSocket(port);
+    public InitConnection(int port, String setPassword) {
+        this.setPassword = setPassword;
+
+        try {
+            System.out.println("Waiting for Connection from Client");
+            screenSocket = new ServerSocket(port);
+            audioSocket = new ServerSocket(AUDIO_PORT);
             GraphicsEnvironment gEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            GraphicsDevice gDivce = gEnv.getDefaultScreenDevice();
+            GraphicsDevice gDevice = gEnv.getDefaultScreenDevice();
             Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
             width = "" + dim.getWidth();
             height = "" + dim.getHeight();
-            rect = new Rectangle(dim);
-            robot = new Robot(gDivce);
-            drawGUI();
-            while (true) { 
-                Socket cs = socket.accept();
-                password = new DataInputStream(cs.getInputStream());
-                verify = new DataOutputStream(cs.getOutputStream());
-                String clintPassword = password.readUTF();
-                if(clintPassword.equals(setPassword)) {
-                    verify.writeBoolean(true);
-                    verify.writeUTF(width);
-                    verify.writeUTF(height);
-                    new SendScreen(cs,robot,rect);
-                    new ReceiveEvent(cs,robot);
-                }
-                else{
-                    verify.writeBoolean(false);
-                    System.out.println("Invalid Password");
-                }
+            Rectangle rect = new Rectangle(dim);
+            Robot robot = new Robot(gDevice);
+            while (true) {
+                Socket screenClientSocket = screenSocket.accept();
+                Socket audioClientSocket = audioSocket.accept();
+                handleClient(screenClientSocket, audioClientSocket, robot, rect);
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private  void drawGUI(){
+    private void handleClient(Socket screenClientSocket, Socket audioClientSocket, Robot robot, Rectangle rect) {
+        try (DataInputStream password = new DataInputStream(screenClientSocket.getInputStream());
+                DataOutputStream verify = new DataOutputStream(screenClientSocket.getOutputStream())) {
 
+            String clientPassword = password.readUTF();
+            if (clientPassword.equals(setPassword)) {
+                verify.writeBoolean(true);
+                verify.writeUTF(width);
+                verify.writeUTF(height);
+                new SendScreen(screenClientSocket, robot, rect);
+                new ReceiveEvent(screenClientSocket, robot);
+
+                
+                new AudioSender(audioClientSocket).start();
+            } else {
+                verify.writeBoolean(false);
+                System.out.println("Invalid Password");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void drawGUI() {
+        
     }
 }
-

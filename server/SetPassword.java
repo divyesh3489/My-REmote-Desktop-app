@@ -42,7 +42,6 @@ public class SetPassword extends  JFrame implements  ActionListener {
         System.out.println(ValueOfPassword);
         dispose();
         new InitConnection(Integer.parseInt(port),ValueOfPassword);
-        new AudioSender().start();
     
     }
 
