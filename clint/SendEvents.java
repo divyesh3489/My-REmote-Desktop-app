@@ -53,7 +53,7 @@ public class SendEvents implements KeyListener, MouseMotionListener, MouseListen
         writer.println(Command.PRESS_MOUSE.getAbbev());
         int button = e.getButton();
         int xButton = 16;
-        if (button == MouseEvent.BUTTON3) {
+        if (button == 3) {
             xButton = 4;
         }
         writer.println(xButton);
@@ -64,7 +64,7 @@ public class SendEvents implements KeyListener, MouseMotionListener, MouseListen
         writer.println(Command.RELEASE_MOUSE.getAbbev());
         int button = e.getButton();
         int xButton = 16;
-        if (button == MouseEvent.BUTTON3) {
+        if (button == 3) {
             xButton = 4;
         }
         writer.println(xButton);
