@@ -91,8 +91,8 @@ public class ConnectionStatusFrame extends JFrame {
 
         private void handleClient(Socket clientSocket) {
             try {
-                InitConnection initConnection = new InitConnection(clientSocket, password, statusLabel);
-            } catch (IOException e) {
+                 new InitConnection(clientSocket, password, statusLabel);
+            } catch (Exception e ) {
                 e.printStackTrace();
             }
         }
