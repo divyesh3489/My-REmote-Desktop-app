@@ -73,6 +73,7 @@ public class Authentication extends JFrame implements ActionListener {
             System.out.println("Please Enter Valid password");
             JOptionPane.showMessageDialog(this,"Password is invalid, Please Enter Valid password","Error",JOptionPane.ERROR);
             dispose();
+            
         }
     }   
 
