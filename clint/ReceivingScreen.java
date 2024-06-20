@@ -31,7 +31,9 @@ public class ReceivingScreen extends Thread {
                 img = img.getScaledInstance(panel.getWidth(),panel.getHeight(), Image.SCALE_FAST);
                 
                 Graphics graphics = panel.getGraphics();
+               
                 graphics.drawImage(img, 0, 0, panel.getWidth(), panel.getHeight(), panel);
+                
             }
         } catch (IOException e) {/*  */
             e.printStackTrace();
