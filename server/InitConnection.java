@@ -20,11 +20,13 @@ public class InitConnection {
     private JLabel statusLabel;
     String width = "";
     String height = "";
+    int port;
 
-    public InitConnection(Socket clientSocket, String password, JLabel statusLabel) {
+    public InitConnection(Socket clientSocket, String password, JLabel statusLabel , int port ) {
         this.clientSocket = clientSocket;
         this.password = password;
         this.statusLabel = statusLabel;
+        this.port = port;
         handleConnection();
     }
 
@@ -53,7 +55,7 @@ public class InitConnection {
             } else {
                 output.writeBoolean(false);
                 statusLabel.setText("Authentication failed. Incorrect password.");
-                clientSocket.close();
+                new ConnectionStatusFrame(port , password);
             }
         } catch (Exception e) {
             statusLabel.setText("Connection error.");

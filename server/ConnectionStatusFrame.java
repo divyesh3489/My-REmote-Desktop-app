@@ -41,7 +41,7 @@ public class ConnectionStatusFrame extends JFrame {
                 serverSocket = new ServerSocket(port);
                 clientSocket = serverSocket.accept();
                 statusLabel.setText("Client connected. Authenticating...");
-                new InitConnection(clientSocket, password, statusLabel);
+                new InitConnection(clientSocket, password, statusLabel , port );
             } catch (IOException e) {
                 statusLabel.setText("Connection failed.");
                 e.printStackTrace();
