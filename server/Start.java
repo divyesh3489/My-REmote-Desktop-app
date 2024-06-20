@@ -7,6 +7,6 @@ public class Start {
         setpassowrd.setSize(300,80);
         setpassowrd.setLocation(500,300);
         setpassowrd.setVisible(true);
-   
+     
     }
 }
