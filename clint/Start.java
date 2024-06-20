@@ -7,6 +7,8 @@ public class Start {
         String ip = JOptionPane.showInputDialog("Enter The Server Ip Address");
         Start stratProgram =new Start();
         stratProgram.CreateSocket(ip,Integer.parseInt(port));
+        AudioReceiver audioReceiver = new AudioReceiver(ip);
+        audioReceiver.start();
 
     }
     public  void CreateSocket(String ip , int port) {
@@ -22,5 +24,4 @@ public class Start {
             e.printStackTrace();
         }
     }
-    
 }
