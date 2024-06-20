@@ -46,7 +46,7 @@ public class Authentication extends JFrame implements ActionListener {
             verification = new DataInputStream(clientSocket.getInputStream());
             checkPass.writeUTF(getPasswordvalue);
             verify = verification.readBoolean();
-
+            System.out.println(verify);
             if (verify) {
                 String width = verification.readUTF();
                 String height = verification.readUTF();
