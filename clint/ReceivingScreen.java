@@ -38,6 +38,7 @@ public class ReceivingScreen extends Thread {
                 Graphics graphics = cPanel.getGraphics();
                 graphics.drawImage(img, 0, 0, cPanel.getWidth(),cPanel.getHeight(),cPanel);
             }
+            
         }
         catch (IOException e){
             e.printStackTrace();
