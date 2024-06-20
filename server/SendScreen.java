@@ -12,16 +12,14 @@ public class SendScreen extends Thread {
     private Robot robot;
     private Rectangle screenRect;
 
-    public SendScreen(Socket clientSocket, JLabel statusLabel) {
+    public SendScreen(Socket clientSocket, JLabel statusLabel , Robot robot, Rectangle screenRect) {
+
+
         this.clientSocket = clientSocket;
         this.statusLabel = statusLabel;
-        try {
-            this.robot = new Robot();
-            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            this.screenRect = new Rectangle(screenSize);
-        } catch (AWTException e) {
-            e.printStackTrace();
-        }
+        this.robot = robot;
+        this.screenRect = screenRect;
+       
         start();
     }
 
