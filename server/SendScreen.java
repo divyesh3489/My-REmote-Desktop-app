@@ -16,27 +16,21 @@ public class SendScreen extends Thread {
     OutputStream output = null;
 
     public SendScreen(Socket clientSocket, JLabel statusLabel , Robot robot, Rectangle screenRect) {
-
-
         this.clientSocket = clientSocket;
         this.statusLabel = statusLabel;
         this.robot = robot;
         this.screenRect = screenRect;
-       
         this.start();
     }
 
     public void run() {
-        try
-        {
+        try{
             output = clientSocket.getOutputStream();
         }
-        catch(IOException e)
-        {
+        catch(IOException e){
             e.printStackTrace();
         }
-        while(this.loopFlag)
-        {
+        while(this.loopFlag){
             BufferedImage screenCapture = robot.createScreenCapture(screenRect);
             try {
                 ImageIO.write(screenCapture, "jpeg", output);
@@ -50,6 +44,5 @@ public class SendScreen extends Thread {
                 e.printStackTrace();
             }
         }
-
     }
 }
