@@ -1,6 +1,13 @@
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.awt.*;
+import  java.io.*;
+import  javax.imageio.ImageIO;
+import java.io.ByteArrayOutputStream;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
