@@ -14,6 +14,7 @@ public class Authentication extends JFrame implements ActionListener {
     private boolean verify;
     private JLabel statusLabel;
     private JTextField passwordField;
+    private JPanel panel;
 
     public Authentication(Socket clientSocket) {
         this.clientSocket = clientSocket;
@@ -26,12 +27,12 @@ public class Authentication extends JFrame implements ActionListener {
         JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(this);
 
-        JPanel panel = new JPanel(new GridLayout(3, 1));
-        panel.add(statusLabel);
-        panel.add(passwordField);
-        panel.add(submitButton);
+        this.panel = new JPanel(new GridLayout(3, 1));
+        this.panel.add(statusLabel);
+        this.panel.add(passwordField);
+        this.panel.add(submitButton);
 
-        this.add(panel, BorderLayout.CENTER);
+        this.add(this.panel, BorderLayout.CENTER);
         this.setTitle("Authenticate");
         this.setSize(300, 150);
         this.setLocationRelativeTo(null); // Center the window
@@ -46,15 +47,20 @@ public class Authentication extends JFrame implements ActionListener {
             verification = new DataInputStream(clientSocket.getInputStream());
             checkPass.writeUTF(getPasswordvalue);
             verify = verification.readBoolean();
-            System.out.println(verify);
             if (verify) {
                 String width = verification.readUTF();
                 String height = verification.readUTF();
                 new CreateFrame(clientSocket, width, height);
                 dispose();
             } else {
-                JOptionPane.showMessageDialog(this, "Password is invalid, Please Enter Valid password", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Password is invalid, Please Connect the Ip and fill the Password again.", "Error", JOptionPane.ERROR_MESSAGE);
                 passwordField.setText("");
+                clientSocket.close();
+                dispose();
+                this.panel.removeAll();
+                this.panel.revalidate();
+                this.panel.repaint();
+                Start.main(new String[0]);
             }
         } catch (IOException ex) {
             ex.printStackTrace();

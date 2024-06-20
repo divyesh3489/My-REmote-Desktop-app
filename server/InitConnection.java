@@ -11,22 +11,17 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.net.ServerSocket;
 
-
-
-
 public class InitConnection {
     private Socket clientSocket;
     private String password;
     private JLabel statusLabel;
     String width = "";
     String height = "";
-    int port;
 
-    public InitConnection(Socket clientSocket, String password, JLabel statusLabel , int port ) {
+    public InitConnection(Socket clientSocket, String password, JLabel statusLabel) {
         this.clientSocket = clientSocket;
         this.password = password;
         this.statusLabel = statusLabel;
-        this.port = port;
         handleConnection();
     }
 
@@ -55,7 +50,15 @@ public class InitConnection {
             } else {
                 output.writeBoolean(false);
                 statusLabel.setText("Authentication failed. Incorrect password.");
-                new ConnectionStatusFrame(port , password);
+                clientSocket.close();
+                // new ConnectionStatusFrame(port , password);
+                SwingUtilities.invokeLater(() -> {
+                    // Restart server to listen for new connections
+                    if (statusLabel.getParent() instanceof ConnectionStatusFrame) {
+                        ((ConnectionStatusFrame) statusLabel.getParent()).restartServer();
+                    }
+                });
+            
             }
         } catch (Exception e) {
             statusLabel.setText("Connection error.");
