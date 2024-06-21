@@ -1,54 +1,42 @@
-
-import java.awt.Graphics;
-import java.awt.Image;
+import javax.swing.*;
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
 
 public class ReceivingScreen extends Thread {
     private ObjectInputStream cObjectInputStream = null;
-    private JPanel cPanel = null;
-    private boolean  loopFlag = true;
-    InputStream Oinput = null;
+    private InputStream input;
+    private JPanel panel;
+    private boolean loopFlag = true;
     Image img = null;
-
-    public ReceivingScreen(InputStream input, JPanel cPanel) {
-        this.Oinput = input;
-        this.cPanel = cPanel;
+    public ReceivingScreen(InputStream input, JPanel panel) {
+        this.input = input;
+        this.panel = panel;
         this.start();
     }
-    public void run()
-    {
-        try
-        {
-            while(this.loopFlag)
-            {   
-                byte array[] = new byte[1024*1024];
-                int count = 0;
-                do { 
 
-                    count += Oinput.read(array,count,array.length-count);
-                    
-                } while (!(count > 4 && array[count-2] == (byte)-1 && array[count -1] == (byte)-39));
+    public void run() {
+        try {
+            while (this.loopFlag) {
+                byte array[] = new byte[1024 * 1024];
+                int count = 0;
+                do {
+                    count += input.read(array, count, array.length - count);
+                } while (!(count > 4 && array[count - 2] == (byte)-1 && array[count - 1] == (byte)-39));
                 img =ImageIO.read(new ByteArrayInputStream(array));
-                img = img.getScaledInstance(cPanel.getWidth(),cPanel.getHeight(), Image.SCALE_FAST);
-                Graphics graphics = cPanel.getGraphics();
-                graphics.drawImage(img, 0, 0, cPanel.getWidth(),cPanel.getHeight(),cPanel);
+                img = img.getScaledInstance(panel.getWidth(),panel.getHeight(), Image.SCALE_FAST);
+                
+                Graphics graphics = panel.getGraphics();
+               
+                graphics.drawImage(img, 0, 0, panel.getWidth(), panel.getHeight(), panel);
+                
             }
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {/*  */
             e.printStackTrace();
         }
-       
     }
-
-    
-    
-
-
-    
 }

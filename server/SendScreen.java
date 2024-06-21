@@ -1,40 +1,39 @@
-import java.awt.Rectangle;
-import java.awt.Robot;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
-import javax.imageio.ImageIO;
 
-public  class SendScreen extends  Thread
-{
-    Socket cs = null;
-    Robot robot = null;
-    Rectangle rect = null;
+import javax.imageio.ImageIO;
+public class SendScreen extends Thread {
+    private Socket clientSocket;
+    private JLabel statusLabel;
+    private Robot robot;
+    private Rectangle screenRect;
     boolean loopFlag = true;
-    OutputStream outstream = null;
-    public SendScreen(Socket cs, Robot robot , Rectangle rect)
-    {
-        this.cs = cs;
+    OutputStream output = null;
+
+    public SendScreen(Socket clientSocket, JLabel statusLabel , Robot robot, Rectangle screenRect) {
+        this.clientSocket = clientSocket;
+        this.statusLabel = statusLabel;
         this.robot = robot;
-        this.rect = rect;
+        this.screenRect = screenRect;
         this.start();
-    } 
-    public void run()
-    {
-        try
-        {
-            outstream = cs.getOutputStream();
+    }
+
+    public void run() {
+        try{
+            output = clientSocket.getOutputStream();
         }
-        catch(IOException e)
-        {
+        catch(IOException e){
             e.printStackTrace();
         }
-        while(this.loopFlag)
-        {
-            BufferedImage  bImg= robot.createScreenCapture(rect);
+        while(this.loopFlag){
+            BufferedImage screenCapture = robot.createScreenCapture(screenRect);
             try {
-                ImageIO.write(bImg,"jpeg", outstream);
+                ImageIO.write(screenCapture, "jpeg", output);
                 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -46,4 +45,4 @@ public  class SendScreen extends  Thread
             }
         }
     }
-} 
+}
