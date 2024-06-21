@@ -25,34 +25,8 @@ public class ConnectionStatusFrame extends JFrame {
         this.setVisible(true);
         this.port = port;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // new ConnectionHandler(port, password).start();
-
         startServer();
     }
-
-    
-    // private class ConnectionHandler extends Thread {
-    //     private int port;
-    //     private String password;
-
-    //     public ConnectionHandler(int port, String password) {
-    //         this.port = port;
-    //         this.password = password;
-    //     }
-
-    //     public void run() {
-    //         try {
-    //             serverSocket = new ServerSocket(port);
-    //             clientSocket = serverSocket.accept();
-    //             statusLabel.setText("Client connected. Authenticating...");
-    //             new InitConnection(clientSocket, password, statusLabel , port );
-    //         } catch (IOException e) {
-    //             statusLabel.setText("Connection failed.");
-    //             e.printStackTrace();
-    //         }
-    //     }
-    // }
     
     private void startServer() {
         try {

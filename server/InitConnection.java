@@ -51,9 +51,7 @@ public class InitConnection {
                 output.writeBoolean(false);
                 statusLabel.setText("Authentication failed. Incorrect password.");
                 clientSocket.close();
-                // new ConnectionStatusFrame(port , password);
                 SwingUtilities.invokeLater(() -> {
-                    // Restart server to listen for new connections
                     if (statusLabel.getParent() instanceof ConnectionStatusFrame) {
                         ((ConnectionStatusFrame) statusLabel.getParent()).restartServer();
                     }
