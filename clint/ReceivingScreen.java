@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.net.SocketException;
 
 import javax.imageio.ImageIO;
 
@@ -26,17 +27,27 @@ public class ReceivingScreen extends Thread {
                 int count = 0;
                 do {
                     count += input.read(array, count, array.length - count);
-                } while (!(count > 4 && array[count - 2] == (byte)-1 && array[count - 1] == (byte)-39));
-                img =ImageIO.read(new ByteArrayInputStream(array));
-                img = img.getScaledInstance(panel.getWidth(),panel.getHeight(), Image.SCALE_FAST);
-                
+                } while (!(count > 4 && array[count - 2] == (byte) -1 && array[count - 1] == (byte) -39));
+                img = ImageIO.read(new ByteArrayInputStream(array));
+                img = img.getScaledInstance(panel.getWidth(), panel.getHeight(), Image.SCALE_FAST);
+
                 Graphics graphics = panel.getGraphics();
-               
+
                 graphics.drawImage(img, 0, 0, panel.getWidth(), panel.getHeight(), panel);
-                
+
             }
-        } catch (IOException e) {/*  */
+        }
+        catch (SocketException e) {
             e.printStackTrace();
+            System.exit(0);
+        } 
+         catch (IOException e) {/*  */
+            e.printStackTrace();
+            System.exit(0);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            System.exit(0);
         }
     }
 }
