@@ -38,15 +38,12 @@ public class ReceivingScreen extends Thread {
             }
         }
         catch (SocketException e) {
-            e.printStackTrace();
             System.exit(0);
         } 
          catch (IOException e) {/*  */
-            e.printStackTrace();
             System.exit(0);
         }
         catch (Exception e) {
-            e.printStackTrace();
             System.exit(0);
         }
     }
