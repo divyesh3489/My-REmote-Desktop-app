@@ -23,22 +23,13 @@ public class Start extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     public static void main(String[] args) {
+        String ip = JOptionPane.showInputDialog(null, "Enter the Server IP Address:", "Server IP", JOptionPane.QUESTION_MESSAGE);
         Start startProgram = new Start();
-        boolean connected = false;
-        while(!connected)
-        {
-            String ip = JOptionPane.showInputDialog(null, "Enter the Server IP Address:", "Server IP", JOptionPane.QUESTION_MESSAGE);
-            if (ip == null)
-            {
-                startProgram.createFrame(ip);
-                startProgram.createSocket(ip, Integer.parseInt(port));
-                connected = startProgram.createSocket(ip, Integer.parseInt(port));
-            }
-        }
-
+        startProgram.createFrame(ip);
+        startProgram.createSocket(ip, Integer.parseInt(port));
     }
 
-    public boolean createSocket(String ip, int port) {
+    public void createSocket(String ip, int port) {
         try {
             Socket socket1 = new Socket(ip, port);
             this.setVisible(false);
@@ -50,10 +41,8 @@ public class Start extends JFrame {
             auth.setSize(400, 150);
             auth.setLocationRelativeTo(null);
             auth.setVisible(true);
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
     }
 }
