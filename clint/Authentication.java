@@ -63,7 +63,7 @@ public class Authentication extends JFrame implements ActionListener {
                 Start.main(new String[0]);
             }
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println("Error in Authentication actionPerformed: " + ex);
         }
     }
 }

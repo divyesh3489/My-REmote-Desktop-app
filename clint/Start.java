@@ -37,8 +37,7 @@ public class Start extends JFrame {
             this.setVisible(false);
             this.remove(this);
             this.repaint();
-            this.revalidate();
-            System.out.println("Connecting to Server");
+            this.revalidate();            
             Authentication auth = new Authentication(socket1);
             auth.setSize(400, 150);
             auth.setLocationRelativeTo(null);
