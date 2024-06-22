@@ -54,7 +54,7 @@ public class ConnectionStatusFrame extends JFrame {
         public void run() {
             while (!isInterrupted()) {
                 try {
-                    statusLabel.setText("Waiting for client to connect...");
+                    // statusLabel.setText("Waiting for client to connect...");
                     Socket clientSocket = serverSocket.accept();
                     statusLabel.setText("Client connected successfully! Authenticating... ");
                     handleClient(clientSocket);
@@ -66,6 +66,7 @@ public class ConnectionStatusFrame extends JFrame {
 
         private void handleClient(Socket clientSocket) {
             try {
+                
                 new InitConnection(clientSocket, password, statusLabel);
             } catch (Exception e ) {
                 e.printStackTrace();

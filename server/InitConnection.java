@@ -47,8 +47,10 @@ public class InitConnection {
                 new ReceiveEvent(this.clientSocket, robot); 
             } else {
                 output.writeBoolean(false);
-                statusLabel.setText("Authentication failed. Incorrect password.");
+                statusLabel.setText("Authentication failed. Incorrect password. Connection Terminated.");
                 clientSocket.close();
+                Thread.sleep(3000);
+                statusLabel.setText("Waiting for client to connect...");
                 SwingUtilities.invokeLater(() -> {
                     if (statusLabel.getParent() instanceof ConnectionStatusFrame) {
                         ((ConnectionStatusFrame) statusLabel.getParent()).restartServer();
