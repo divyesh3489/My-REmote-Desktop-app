@@ -1,12 +1,10 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
-
 import javax.imageio.ImageIO;
+import javax.swing.*;
 public class SendScreen extends Thread {
     private Socket clientSocket;
     private JLabel statusLabel;
@@ -44,6 +42,7 @@ public class SendScreen extends Thread {
                 e.printStackTrace();
             }
         }
+        
         if(this.loopFlag == false){
             try{
                 clientSocket.close();
