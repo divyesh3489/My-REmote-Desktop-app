@@ -1,6 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,21 +26,16 @@ public class Start extends JFrame {
     }
     public static void main(String[] args) {
         Start startProgram = new Start();
-        boolean connected = false;
-        while(!connected)
-        {
-            String ip = JOptionPane.showInputDialog(null, "Enter the Server IP Address:", "Server IP", JOptionPane.QUESTION_MESSAGE);
-            if (ip == null)
-            {
-                startProgram.createFrame(ip);
-                startProgram.createSocket(ip, Integer.parseInt(port));
-                connected = startProgram.createSocket(ip, Integer.parseInt(port));
-            }
-        }
+   
+            String ip = JOptionPane.showInputDialog(null, "Enter the Server IP Address or HostName:", "Server IP", JOptionPane.QUESTION_MESSAGE);
+            startProgram.createFrame(ip);
+            startProgram.createSocket(ip, Integer.parseInt(port));
+
+       
 
     }
 
-    public boolean createSocket(String ip, int port) {
+    public void  createSocket(String ip, int port) {
         try {
             Socket socket1 = new Socket(ip, port);
             this.setVisible(false);
@@ -50,10 +47,33 @@ public class Start extends JFrame {
             auth.setSize(400, 150);
             auth.setLocationRelativeTo(null);
             auth.setVisible(true);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+          
         }
+        catch (SocketException e)
+        {
+            this.setVisible(false);
+            this.remove(this);
+            this.repaint();
+            this.revalidate();
+            String args[] = {};
+            JOptionPane.showMessageDialog(null, "Invalid IP Address", "Error", JOptionPane.ERROR_MESSAGE);
+            Start.main(args);
+
+        }
+        catch (UnknownHostException e)
+        {
+            this.setVisible(false);
+            this.remove(this);
+            this.repaint();
+            this.revalidate();
+            String args[] = {};
+            JOptionPane.showMessageDialog(null, "Invalid IP Address", "Error", JOptionPane.ERROR_MESSAGE);
+            Start.main(args);
+        }
+         
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
