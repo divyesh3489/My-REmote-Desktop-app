@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import javax.swing.*;
 
 public class Authentication extends JFrame implements ActionListener {
     private Socket clientSocket;
@@ -63,7 +63,7 @@ public class Authentication extends JFrame implements ActionListener {
                 Start.main(new String[0]);
             }
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println("Error in Authentication actionPerformed: " + ex);
         }
     }
 }

@@ -34,8 +34,7 @@ public class SetPassword extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        ValueOfPassword = new String(passwordField.getPassword());
-        System.out.println(ValueOfPassword);
+        ValueOfPassword = new String(passwordField.getPassword());        
         dispose();
         new ConnectionStatusFrame(Integer.parseInt(port), ValueOfPassword);
     }

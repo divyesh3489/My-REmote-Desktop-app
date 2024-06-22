@@ -1,20 +1,18 @@
-import javax.swing.*;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.Socket;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
-import java.net.ServerSocket;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
+import javax.swing.*;
 
 public class InitConnection {
     private Socket clientSocket;
     private String password;
-    private JLabel statusLabel;
+    JLabel statusLabel;
     String width = "";
     String height = "";
 
@@ -49,8 +47,10 @@ public class InitConnection {
                 new ReceiveEvent(this.clientSocket, robot); 
             } else {
                 output.writeBoolean(false);
-                statusLabel.setText("Authentication failed. Incorrect password.");
+                statusLabel.setText("Authentication failed. Incorrect password. Connection Terminated.");
                 clientSocket.close();
+                Thread.sleep(3000);
+                statusLabel.setText("Waiting for client to connect...");
                 SwingUtilities.invokeLater(() -> {
                     if (statusLabel.getParent() instanceof ConnectionStatusFrame) {
                         ((ConnectionStatusFrame) statusLabel.getParent()).restartServer();
