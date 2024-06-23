@@ -27,6 +27,10 @@ public class Start extends JFrame {
     public static void main(String[] args) {
         Start startProgram = new Start();
             String ip = JOptionPane.showInputDialog(null, "Enter the Server IP Address or HostName:", "Server IP", JOptionPane.QUESTION_MESSAGE);
+            if (ip == null)
+            {
+                System.exit(0);
+            }
             startProgram.createFrame(ip);
             startProgram.createSocket(ip, Integer.parseInt(port));
     }

@@ -33,13 +33,13 @@ public class SendScreen extends Thread {
             try {
                 ImageIO.write(screenCapture, "jpeg", output); 
             } catch (Exception e) {
-                e.printStackTrace();
+                
                 this.loopFlag= false;
             }
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.exit(0);
             }
         }
         
@@ -48,7 +48,7 @@ public class SendScreen extends Thread {
                 clientSocket.close();
             }
             catch(Exception e){
-                e.printStackTrace();
+                System.exit(0);
             }
         }
     }
